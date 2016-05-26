@@ -1,0 +1,21 @@
+/* STORAGE
+font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+	<!-- Fresh Prince title font --><link href='Assets/fonts/Aerosol.ttf' rel='stylesheet' type='text/css'>
+	<!-- Fresh Prince small font --><link href='Assets/fonts/freshmarker.ttf' rel='stylesheet' type='text/css'>
+*/
+
+
+body{
+	background-color:#B1CE36;
+}
+
+
+@font-face {
+    font-family: Aerosol;
+    src: Assets/fonts/Aerosol.ttf;
+}
+.FP{
+	font-family: 'Aerosol';
+}
