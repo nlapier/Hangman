@@ -1,22 +1,45 @@
-var characters = ["WILL 'THE FRESH PRINCE' SMITH", "PHILLIP BANKS", 
-"VIVIAN BANKS", "CARLTON BANKS", "HILLARY BANKS", "ASHLEY BANKS", 
-"GEOFFREY", "NICKY BANKS", "JAZZ", "VY SMITH", "LISA WILKES", "JACKIE AMES"]
-var wins = 0;
-var validInput = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-function getRandomInt(max) {//Returns random integer between 0 and max-1.
-    return Math.floor(Math.random() * max)
-}
+$(document).ready(function(){
+	var characters = ["WILL 'THE FRESH PRINCE' SMITH", "PHILLIP BANKS", 
+	"VIVIAN BANKS", "CARLTON BANKS", "HILLARY BANKS", "ASHLEY BANKS", 
+	"GEOFFREY", "NICKY BANKS", "JAZZ", "VY SMITH", "LISA WILKES", "JACKIE AMES"]
+	var wins = 0;
+	var validInput = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	function getRandomInt(max) {//Returns random integer between 0 and max-1.
+	    return Math.floor(Math.random() * max)
+	}
 
-function alertBox(message){
-	return "<div class = 'alert alert-warning alert-dismissable' role='alert' id='alertDiv'>"
-	+ message + "</div"
-}
+	//Old alertBox code
+	/*
+	return "<div class = 'alert alert-warning alert-dismissable' role='alert' id='alertDiv'><button type='button' 
+	class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"
+		+ message + "</div>"
 
-String.prototype.replaceAt = function(index, character) {
-    return this.slice(0, index) + character + this.slice(index+character.length);
-}
 
-	function startGame(){
+
+			function addAlert(message) {
+    $('#alerts').append(
+        '<div class="alert">' +
+            '<button type="button" class="close" data-dismiss="alert">' +
+            '&times;</button>' + message + '</div>');
+}
+	*/
+
+	function alertBox(message){
+		$("#infoDiv").append(
+			"<div class = 'alert alert-warning alert-dismissable' role='alert'>" +
+			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+			"<span aria-hidden='true'>&times;</span></button>" +
+				message +
+			"</div>"
+			)
+	}
+
+	String.prototype.replaceAt = function(index, character) {
+	    return this.slice(0, index) + character + this.slice(index+character.length);
+	}
+
+	// Start game
+	$("#startButton").button().click(function(){
 
 		var currentCharacter = characters[getRandomInt(characters.length)];			
 		var displayCharacter = "";
@@ -55,8 +78,13 @@ String.prototype.replaceAt = function(index, character) {
 
 
 			//Filters non-letter keys.
+			// if (validInput.indexOf(userInput) === -1){
+			// 	$("#alertDiv").html(alertBox("Invalid input, Homes!"))
+			// 	console.log("Invalid")
+			// }
+
 			if (validInput.indexOf(userInput) === -1){
-				$("#alertDiv").html(alertBox("Invalid input, Homes!"))
+				alertBox("Invalid input, Homes!")
 				console.log("Invalid")
 			}
 
@@ -85,7 +113,6 @@ String.prototype.replaceAt = function(index, character) {
 					//Updates alreadyGuessed and its corresponding html panel
 					alreadyGuessed += userInput;
 					document.getElementById("alreadyGuessed").innerHTML = alreadyGuessed;
-					console.log(alreadyGuessed)
 
 					//Ends the game if the user is out of guesses
 					if (remainingGuesses < 1){return alert("Yo Homes, smell ya later!")}
@@ -100,6 +127,5 @@ String.prototype.replaceAt = function(index, character) {
 				console.log("Remaining guesses:" + remainingGuesses)
 			}
 		}
-	}
-
-
+	})
+})
