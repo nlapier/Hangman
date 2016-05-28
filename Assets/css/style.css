@@ -4,18 +4,64 @@ font-family: Georgia, "Times New Roman", Times, serif;
 
 	<!-- Fresh Prince title font --><link href='Assets/fonts/Aerosol.ttf' rel='stylesheet' type='text/css'>
 	<!-- Fresh Prince small font --><link href='Assets/fonts/freshmarker.ttf' rel='stylesheet' type='text/css'>
+	color: #6CDC04;
+
+
 */
 
 
-body{
-	background-color:#B1CE36;
-}
-
 
 @font-face {
-    font-family: Aerosol;
-    src: Assets/fonts/Aerosol.ttf;
+    font-family: "Aerosol";
+    src: url("Assets/fonts/Aerosol.ttf")
+    	format ("truetype");
 }
-.FP{
+
+body{
+/*	background-image: url("../images/background2.jpg");
+*/	background-color: #FF579C;
+	font-family: 'Loved by the King', cursive;
+}
+
+#the{
+	margin-bottom: 0px;
+}
+
+h1{
 	font-family: 'Aerosol';
+	font-size: 100pt;
+	margin: 0px 0px 0px 0px;
 }
+
+#hangman{
+	margin-top: 0px;
+}
+
+h2{
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-style: italic;
+	font-size: 35pt;
+	color: #37EAEE;
+	text-shadow: -2px 0px 0px black;
+}
+
+h3, #startButton, .panel > .panel-heading{
+	color: #B1CE36;
+	text-shadow: -3px 0px 3px #FF579C, 3px 0px 2px #FF579C, 
+	0px 3px 2px #FF579C, 0px -3px 2px #FF579C, -3px -3px 2px #FF579C, 
+	3px 3px 2px #FF579C, -3px 3px 2px #FF579C, 3px -3px 2px #FF579C;
+}
+
+.panel > .panel-heading {
+    font-size: 30pt;
+}
+
+#startButton{
+	font-size: 22pt;
+}
+
+h3{
+	font-size: 45pt;
+}
+
+

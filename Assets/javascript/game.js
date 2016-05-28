@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	var characters = ["WILL 'THE FRESH PRINCE' SMITH", "PHILLIP BANKS", 
+
+	var characters = ["WILL 'THE FRESH PRINCE' SMITH", "PHILIP BANKS", 
 	"VIVIAN BANKS", "CARLTON BANKS", "HILLARY BANKS", "ASHLEY BANKS", 
 	"GEOFFREY", "NICKY BANKS", "JAZZ", "VY SMITH", "LISA WILKES", "JACKIE AMES"]
 	var wins = 0;
@@ -8,40 +9,33 @@ $(document).ready(function(){
 	    return Math.floor(Math.random() * max)
 	}
 
-	//Old alertBox code
-	/*
-	return "<div class = 'alert alert-warning alert-dismissable' role='alert' id='alertDiv'><button type='button' 
-	class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>"
-		+ message + "</div>"
-
-
-
-			function addAlert(message) {
-    $('#alerts').append(
-        '<div class="alert">' +
-            '<button type="button" class="close" data-dismiss="alert">' +
-            '&times;</button>' + message + '</div>');
-}
-	*/
-
+	//Creates an alert box
 	function alertBox(message){
 		$("#infoDiv").append(
-			"<div class = 'alert alert-warning alert-dismissable' role='alert'>" +
+			"<div class = 'alert alert-warning alert-dismissable' role='alert' id=alertBox>" +
 			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
 			"<span aria-hidden='true'>&times;</span></button>" +
 				message +
 			"</div>"
 			)
+	//Makes alert box disappear after 5 seconds
+	window.setTimeout(function(){
+	    $("#alertBox").fadeTo(500, 0).slideUp(500, function(){
+	        $(this).remove(); 
+	    	});
+		},5000)
 	}
 
-	String.prototype.replaceAt = function(index, character) {
-	    return this.slice(0, index) + character + this.slice(index+character.length);
+	//Letter replacement function, used to display correctly guessed letters
+	String.prototype.replaceAt = function(index, letter) {
+	    return this.slice(0, index) + letter + this.slice(index+letter.length);
 	}
 
-	// Start game
+	// Start game button
 	$("#startButton").button().click(function(){
 
-		var currentCharacter = characters[getRandomInt(characters.length)];			
+		var characterIndex = getRandomInt(characters.length);
+		var currentCharacter = characters[characterIndex];			
 		var displayCharacter = "";
 		var remainingGuesses = 10;
 		var alreadyGuessed = "";
@@ -70,18 +64,12 @@ $(document).ready(function(){
 
 		document.onkeyup = function(event) {
 
+			//correct is a counter variable, used by the for loop below
 			var correct = 0;
 			console.log("correct:" + correct);
 
 			var userInput = String.fromCharCode(event.keyCode).toUpperCase();
 			console.log(userInput)
-
-
-			//Filters non-letter keys.
-			// if (validInput.indexOf(userInput) === -1){
-			// 	$("#alertDiv").html(alertBox("Invalid input, Homes!"))
-			// 	console.log("Invalid")
-			// }
 
 			if (validInput.indexOf(userInput) === -1){
 				alertBox("Invalid input, Homes!")
@@ -90,7 +78,7 @@ $(document).ready(function(){
 
 			//Filters letters that have already been guessed.
 			else if (alreadyGuessed.indexOf(userInput) !==-1 || displayCharacter.indexOf(userInput) !==-1){
-				alert("Yo, you already guessed that letter!");
+				alertBox("Yo, you already guessed that letter!");
 				console.log("Guessed")
 			}
 
@@ -114,18 +102,31 @@ $(document).ready(function(){
 					alreadyGuessed += userInput;
 					document.getElementById("alreadyGuessed").innerHTML = alreadyGuessed;
 
-					//Ends the game if the user is out of guesses
-					if (remainingGuesses < 1){return alert("Yo Homes, smell ya later!")}
-				}
-
-				if (displayCharacter === currentCharacter) {
-					wins++;
-					return 	alert("You got it!");
 				}
 				console.log("correct:" + correct);
-				console.log(displayCharacter);
-				console.log("Remaining guesses:" + remainingGuesses)
+				console.log("displayCharacter: " + displayCharacter);
+				console.log("currentCharacter: " + currentCharacter)
+
+			}
+		
+			//Game over logic
+			if (remainingGuesses < 1){
+				console.log("Game over")
+				return alertBox("Yo Homes, smell ya later! \n GAME OVER.")
+			}
+
+			//User win logic
+			if (displayCharacter === currentCharacter) {
+				wins++;
+				document.getElementById("gamesWon").innerHTML = wins;
+				console.log("Won!")
+				return 	alertBox("You got it!");
 			}
 		}
 	})
 })
+
+
+
+
+
