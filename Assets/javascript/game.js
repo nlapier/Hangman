@@ -2,9 +2,13 @@ $(document).ready(function(){
 
 	var characters = ["WILL 'THE FRESH PRINCE' SMITH", "PHILIP BANKS", 
 	"VIVIAN BANKS", "CARLTON BANKS", "HILLARY BANKS", "ASHLEY BANKS", 
-	"GEOFFREY", "NICKY BANKS", "JAZZ", "VY SMITH", "LISA WILKES", "JACKIE AMES"]
+	"GEOFFREY", "NICKY BANKS", "JAZZ", "VY SMITH", "LISA WILKES", "JACKIE AMES", "DEE DEE"]
 	var wins = 0;
 	var validInput = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	var win = new Audio("Assets/audio/FreshPrinceMiddle.mp3")
+	var begin = new Audio("Assets/audio/FreshPrinceIntro.mp3")
+
+	begin.play();
 
 	//Returns random integer between 0 and max-1.
 	function getRandomInt(max) {
@@ -16,17 +20,17 @@ $(document).ready(function(){
 		$("#infoDiv").append(
 			"<div class = 'alert alert-warning alert-dismissable' role='alert' id=alertBox>" +
 			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-			"<span aria-hidden='true'>&times;</span></button>" +
+			"<span aria-hidden='true'>&times;</span></button><p>" +
 				message +
-			"</div>"
+			"</p></div>"
 		)
 		disappear("#alertBox");
 	}
 
 	//Pops-up an image of the character when guessed correctly
 	function charImage(input){
-		input = input.replace(/\s+/g, '') + ".jpg";
-		console.log(input);
+		input = input.replace(/\s+/g, '') + ".jpg";//This modifies the character name to match their respective jpegs, 
+		//by removing any spaces with regex and appending ".jpg"
 		$("#charDiv").append(
 			"<img src= 'Assets/images/" + input + "' class='img-responsive' alt='Responsive image'>"
 		)
@@ -48,7 +52,7 @@ $(document).ready(function(){
 	}
 
 	// Start game button
-	$("#startButton").button().click(function(){
+	$("#startButton").button().click(function start(){
 
 		var currentCharacter = characters[getRandomInt(characters.length)];			
 		var displayCharacter = "";
@@ -115,25 +119,23 @@ $(document).ready(function(){
 					document.getElementById("alreadyGuessed").innerHTML = alreadyGuessed;
 
 				}
-				console.log("correct:" + correct);
-				console.log("displayCharacter: " + displayCharacter);
-				console.log("currentCharacter: " + currentCharacter)
 
 			}
 		
 			//Game over logic
 			if (remainingGuesses < 1){
-				console.log("Game over")
+				document.getElementById("game").innerHTML = currentCharacter;
 				alertBox("Yo Homes, smell ya later! \n GAME OVER.")
+				
 			}
 
 			//User win logic
 			if (displayCharacter === currentCharacter) {
 				wins++;
-				document.getElementById("gamesWon").innerHTML = wins;
-				console.log("Won!")
 				alertBox("You got it!");
 				charImage(currentCharacter);
+				win.play();
+				start();
 			}
 		}
 	})
