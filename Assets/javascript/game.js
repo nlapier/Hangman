@@ -5,7 +5,9 @@ $(document).ready(function(){
 	"GEOFFREY", "NICKY BANKS", "JAZZ", "VY SMITH", "LISA WILKES", "JACKIE AMES"]
 	var wins = 0;
 	var validInput = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	function getRandomInt(max) {//Returns random integer between 0 and max-1.
+
+	//Returns random integer between 0 and max-1.
+	function getRandomInt(max) {
 	    return Math.floor(Math.random() * max)
 	}
 
@@ -17,16 +19,30 @@ $(document).ready(function(){
 			"<span aria-hidden='true'>&times;</span></button>" +
 				message +
 			"</div>"
-			)
-	//Makes alert box disappear after 5 seconds
-	window.setTimeout(function(){
-	    $("#alertBox").fadeTo(500, 0).slideUp(500, function(){
-	        $(this).remove(); 
+		)
+		disappear("#alertBox");
+	}
+
+	//Pops-up an image of the character when guessed correctly
+	function charImage(input){
+		input = input.replace(/\s+/g, '') + ".jpg";
+		console.log(input);
+		$("#charDiv").append(
+			"<img src= 'Assets/images/" + input + "' class='img-responsive' alt='Responsive image'>"
+		)
+		disappear("#charDiv");
+	}
+
+	//Makes alert box/image disappear after 5 seconds
+	function disappear(id){
+		window.setTimeout(function(){
+	    	$(id).fadeTo(500, 0).slideUp(500, function(){
+	        	$(this).remove();
 	    	});
 		},5000)
 	}
 
-	//Letter replacement function, used to display correctly guessed letters
+	//Letter replacement function, used to display correct letters
 	String.prototype.replaceAt = function(index, letter) {
 	    return this.slice(0, index) + letter + this.slice(index+letter.length);
 	}
@@ -34,10 +50,9 @@ $(document).ready(function(){
 	// Start game button
 	$("#startButton").button().click(function(){
 
-		var characterIndex = getRandomInt(characters.length);
-		var currentCharacter = characters[characterIndex];			
+		var currentCharacter = characters[getRandomInt(characters.length)];			
 		var displayCharacter = "";
-		var remainingGuesses = 10;
+		var remainingGuesses = 7;
 		var alreadyGuessed = "";
 		
 		console.log(currentCharacter);
@@ -66,10 +81,8 @@ $(document).ready(function(){
 
 			//correct is a counter variable, used by the for loop below
 			var correct = 0;
-			console.log("correct:" + correct);
 
 			var userInput = String.fromCharCode(event.keyCode).toUpperCase();
-			console.log(userInput)
 
 			if (validInput.indexOf(userInput) === -1){
 				alertBox("Invalid input, Homes!")
@@ -82,8 +95,8 @@ $(document).ready(function(){
 				console.log("Guessed")
 			}
 
+			//Evaluates all valid guesses.
 			else{
-				//Loops through currentCharacter to evaluate all valid guesses.
 				for (var i = 0; i < currentCharacter.length; i++){
 					if (userInput === currentCharacter[i]){
 						displayCharacter = displayCharacter.replaceAt(i, userInput);
@@ -91,7 +104,6 @@ $(document).ready(function(){
 						correct ++;
 					}
 				}
-				console.log("loop")
 
 				//Handles incorrect guesses.
 				if (correct === 0){
@@ -112,7 +124,7 @@ $(document).ready(function(){
 			//Game over logic
 			if (remainingGuesses < 1){
 				console.log("Game over")
-				return alertBox("Yo Homes, smell ya later! \n GAME OVER.")
+				alertBox("Yo Homes, smell ya later! \n GAME OVER.")
 			}
 
 			//User win logic
@@ -120,7 +132,8 @@ $(document).ready(function(){
 				wins++;
 				document.getElementById("gamesWon").innerHTML = wins;
 				console.log("Won!")
-				return 	alertBox("You got it!");
+				alertBox("You got it!");
+				charImage(currentCharacter);
 			}
 		}
 	})
