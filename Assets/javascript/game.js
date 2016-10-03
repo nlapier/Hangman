@@ -18,7 +18,7 @@ $(document).ready(function(){
 	//Creates an alert box
 	function alertBox(message){
 		$("#infoDiv").append(
-			"<div class = 'alert alert-warning alert-dismissable' role='alert' id=alertBox>" +
+			"<div class = 'alert alert-info alert-dismissable' role='alert' id=alertBox>" +
 			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
 			"<span aria-hidden='true'>&times;</span></button><p>" +
 				message +
