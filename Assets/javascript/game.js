@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var characters = ["WILL 'THE FRESH PRINCE' SMITH", "PHILIP BANKS", 
+	var characters = ["WILL THE FRESH PRINCE SMITH", "PHILIP BANKS", 
 	"VIVIAN BANKS", "CARLTON BANKS", "HILLARY BANKS", "ASHLEY BANKS", 
 	"GEOFFREY", "NICKY BANKS", "JAZZ", "VY SMITH", "LISA WILKES", "JACKIE AMES", "DEE DEE"]
 	var wins = 0;
